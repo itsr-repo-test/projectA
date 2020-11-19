@@ -25,9 +25,7 @@ jobs:
       - name: Pull request?
         if: github.event_name == 'pull_request'
         run: |
-          PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
           hub pr show -f %t $PR_NUMBER
-          echo $PR_NUMBER2
         env:
-          PR_NUMBER2: ${{ github.event.number }} # needs to be done after checkout?
+          PR_NUMBER: ${{ github.event.number }} # needs to be done after checkout?
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
