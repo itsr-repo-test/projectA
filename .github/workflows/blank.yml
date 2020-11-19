@@ -17,6 +17,9 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
+    env:
+      PR_NUMBER: ${{github.event.issue.number}}
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -25,5 +28,5 @@ jobs:
       - name: Pull request?
         if: github.event_name == 'pull_request'
         run: |
-          echo ${{github.event.issue.number}}
-          echo hub pr show -f %t ${{github.event.issue.number}}
+          echo $PR_NUMBER
+          echo hub pr show -f %t $PR_NUMBER
