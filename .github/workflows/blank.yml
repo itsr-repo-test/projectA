@@ -29,4 +29,5 @@ jobs:
           hub pr show -f %t $PR_NUMBER
           echo $PR_NUMBER2
         env:
-          PR_NUMBER2: ${{github.event.issue.number}} # needs to be done after checkout?
+          PR_NUMBER2: ${{ github.event.issue.number }} # needs to be done after checkout?
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
