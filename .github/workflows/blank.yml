@@ -22,7 +22,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: test projectB - check
+      - name: checkout projectB
         if: github.event_name == 'pull_request'
         run: |
           pr_title=$(hub pr show -f %t $PR_NUMBER)
@@ -34,7 +34,10 @@ jobs:
           PR_NUMBER: ${{ github.event.number }} # needs to be done after checkout?
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: test projectB
+      - name: checkout projectB
         if: github.event_name != 'pull_request'
         run: |
           gh repo clone itsr-repo-test/projectB
+
+      - name: test projectB
+        run: cat README.md
