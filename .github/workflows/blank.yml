@@ -27,7 +27,7 @@ jobs:
         run: |
           pr_title=$(hub pr show -f %t $PR_NUMBER)
           pr_dependency=$(hub pr list -f "%I;%t%n" | grep "$pr_title" | awk -F';' '{ print $1 }')
-          [ -z "$pr_dependency" ] && echo $pr_dependency
+          [ -n "$pr_dependency" ] && echo $pr_dependency
         env:
           PR_NUMBER: ${{ github.event.number }} # needs to be done after checkout?
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
