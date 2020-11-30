@@ -25,8 +25,9 @@ jobs:
       - name: test projectB - check
         if: github.event_name == 'pull_request'
         run: |
-          title=$(hub pr show -f %t $PR_NUMBER)
-          echo $title
+          pr_title=$(hub pr show -f %t $PR_NUMBER)
+          pr_dependency=$(hub pr list -f "%I;%t%n" | grep "$pr_title" | awk -F';' '{ print $1 }')
+          [ -z "$pr_dependency" ] && echo $pr_dependency
         env:
           PR_NUMBER: ${{ github.event.number }} # needs to be done after checkout?
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
