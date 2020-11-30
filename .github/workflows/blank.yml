@@ -25,7 +25,7 @@ jobs:
       - name: test projectB - check
         if: github.event_name == 'pull_request'
         run: |
-          title=${hub pr show -f %t $PR_NUMBER}
+          title=$(hub pr show -f %t $PR_NUMBER)
           echo $title
         env:
           PR_NUMBER: ${{ github.event.number }} # needs to be done after checkout?
