@@ -28,7 +28,7 @@ jobs:
           pr_title=$(hub pr show -f %t $PR_NUMBER)
           git clone https://github.com/itsr-repo-test/projectB.git && cd projectB
           pr_dependency=$(hub pr list -f "%I;%t%n" | grep "$pr_title" | awk -F';' '{ print $1 }' || echo)
-          [ -n "$pr_dependency" ] && echo $pr_dependency
+          if [ -n "$pr_dependency" ]; then hub pr checkout $pr_dependency; fi
         shell: bash -ex {0}
         env:
           PR_NUMBER: ${{ github.event.number }} # needs to be done after checkout?
