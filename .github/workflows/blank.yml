@@ -25,6 +25,7 @@ jobs:
       - name: test projectB - check
         if: github.event_name == 'pull_request'
         run: |
+          git clone https://github.com/itsr-repo-test/projectB.git && cd projectB
           pr_title=$(hub pr show -f %t $PR_NUMBER)
           pr_dependency=$(hub pr list -f "%I;%t%n" | grep "$pr_title" | awk -F';' '{ print $1 }')
           [ -n "$pr_dependency" ] && echo $pr_dependency
