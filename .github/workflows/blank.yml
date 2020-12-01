@@ -22,22 +22,11 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: checkout projectB
-        if: github.event_name == 'pull_request'
-        run: |
-          pr_title=$(hub pr show -f %t $PR_NUMBER)
-          git clone https://github.com/itsr-repo-test/projectB.git && cd projectB
-          pr_dependency=$(hub pr list -f "%I;%t%n" | grep "$pr_title" | awk -F';' '{ print $1 }' || echo)
-          if [ -n "$pr_dependency" ]; then hub pr checkout $pr_dependency; fi
-        shell: bash -ex {0}
-        env:
-          PR_NUMBER: ${{ github.event.number }} # needs to be done after checkout?
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: checkout projectB
-        if: github.event_name != 'pull_request'
-        run: |
-          gh repo clone itsr-repo-test/projectB
+      - uses: sreimers/pr-dependency-action@f4cd664
+        with:
+          name: projectB
+          repo: https://github.com/itsr-repo-test/projectB.git
+          secret: ${{ secrets.GITHUB_TOKEN }}
 
       - name: test projectB
-        run: cat projectB/README.md
+        run: cat projectB/test
