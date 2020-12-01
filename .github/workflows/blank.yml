@@ -22,7 +22,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - uses: sreimers/pr-dependency-action@v0.1
+      - uses: sreimers/pr-dependency-action@f4cd664
         with:
           name: projectB
           repo: https://github.com/itsr-repo-test/projectB.git
