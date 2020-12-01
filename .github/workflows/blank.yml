@@ -40,4 +40,4 @@ jobs:
           gh repo clone itsr-repo-test/projectB
 
       - name: test projectB
-        run: cat projectB/README.md
+        run: cat projectB/test
